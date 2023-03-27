@@ -10,9 +10,11 @@ public class ProgrammaEventi
     string titolo;
     List<Evento> eventi;
 
+    public string Titolo { get => titolo; private set => titolo = value; }
+
     public ProgrammaEventi(string titolo)
     {
-        this.titolo = titolo;
+        this.Titolo = titolo;
         this.eventi = new List<Evento>();
     }
     public void AggiungiEvento(Evento evento)
@@ -46,10 +48,21 @@ public class ProgrammaEventi
         eventi.Clear();
     }
 
+    public static string StampaLista(List<Evento> lista)
+    {
+        var nl = Environment.NewLine;
+        string result = "";
+        foreach (var evento in lista)
+        {
+            result += evento.ToString() + nl;
+        }
+        return result;
+    }
+
     public string Programmazione()
     {
         var nl = Environment.NewLine;
-        var programmazione = "Gestore Eventi:" + nl;
+        var programmazione = titolo + nl;
         foreach ( var evento in eventi)
         {
             programmazione += evento.ToString() + nl;
