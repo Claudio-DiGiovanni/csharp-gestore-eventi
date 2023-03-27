@@ -27,65 +27,14 @@ void menu()
                 Console.WriteLine("Inserisci il prezzo della conferenza");
                 var prezzo = Convert.ToDouble(Console.ReadLine());
                 var conferenza = new Conferenza(titolo, data, capienzaMax, relatore, prezzo);
+                gestisciPrenotazioni(conferenza);
                 programmazione.AggiungiEvento(conferenza);
-                Console.WriteLine("Vuoi fare delle prenotazioni? ( y / N )");
-                var input = Console.ReadLine();
-                if (input == "y")
-                {
-                    Console.WriteLine("Quanti posti vuoi prenotare?");
-                    var prenotazioni = Convert.ToInt32(Console.ReadLine());
-                    conferenza.PrenotaPosti(prenotazioni);
-                }
-                Console.WriteLine($"I posti disponibili per l'evento {conferenza.Titolo} sono {conferenza.CapienzaMax - conferenza.Prenotazioni}.");
-                Console.WriteLine($"Sono stati prenotati {conferenza.Prenotazioni} posti su {conferenza.CapienzaMax}.");
-                var disdizione = true;
-                while (disdizione)
-                {
-                    Console.WriteLine("Vuoi disdire dei posti? ( y / N )");
-                    var input2 = Console.ReadLine();
-                    if (input2 == "y")
-                    {
-                        Console.WriteLine("Quanti posti vuoi disdire?");
-                        var disdici = Convert.ToInt32(Console.ReadLine());
-                        conferenza.DisdiciPosti(disdici);
-                        Console.WriteLine($"Sono stati prenotati {conferenza.Prenotazioni}.");
-                        Console.WriteLine($"Rimangono {conferenza.CapienzaMax - conferenza.Prenotazioni} disponibili.");
-                    }
-                    else disdizione = false;
-                }
+                
             }
             else
             {
                 var evento = new Evento(titolo, data, capienzaMax);
-                Console.WriteLine("Vuoi fare delle prenotazioni? ( y / N )");
-                var input1 = Console.ReadLine();
-                if (input1 == "y")
-                {
-                    Console.WriteLine("Quanti posti vuoi prenotare?");
-                    var prenotazioni = Convert.ToInt32(Console.ReadLine());
-                    evento.PrenotaPosti(prenotazioni);
-                }
-                Console.WriteLine($"I posti disponibili per l'evento {evento.Titolo} sono {evento.CapienzaMax - evento.Prenotazioni}.");
-                Console.WriteLine($"Sono stati prenotati {evento.Prenotazioni} posti su {evento.CapienzaMax}.");
-                var disdizione1 = true;
-                while (disdizione1)
-                {
-                    Console.WriteLine("Vuoi disdire dei posti? ( y / N )");
-                    var input2 = Console.ReadLine();
-                    if (input2 == "y")
-                    {
-                        Console.WriteLine("Quanti posti vuoi disdire?");
-                        var disdici = Convert.ToInt32(Console.ReadLine());
-                        evento.DisdiciPosti(disdici);
-                        Console.WriteLine($"Sono stati prenotati {evento.Prenotazioni}.");
-                        Console.WriteLine($"Rimangono {evento.CapienzaMax - evento.Prenotazioni} disponibili.");
-                    }
-                    else disdizione1 = false;
-                }
-                evento.ToString();
-                Console.WriteLine($"Sono stati prenotati {evento.Prenotazioni}.");
-                Console.WriteLine($"Rimangono {evento.CapienzaMax - evento.Prenotazioni} disponibili.");
-
+                gestisciPrenotazioni(evento);
                 programmazione.AggiungiEvento(evento);
             }
 
@@ -104,8 +53,38 @@ void menu()
     {
     Console.WriteLine("Inserisci una data da cercare: ( gg/MM/yyyy )");
     var dataDaCercare = Console.ReadLine();
-    var listaPerData = programmazione.ListaPerData(dataDaCercare);
+    var listaPerData = programmazione.ListaPerData(dataDaCercare!);
     Console.WriteLine($"Eventi in data {dataDaCercare}");
-    Console.WriteLine(ProgrammaEventi.StampaLista(listaPerData) != "" ? ProgrammaEventi.StampaLista(listaPerData) : "Non ci sono eventi in questa data");
+    var result = ProgrammaEventi.StampaLista(listaPerData);
+    Console.WriteLine(result != "" ? result : "Non ci sono eventi in questa data");
+    }
+}
+
+void gestisciPrenotazioni(Evento evento)
+{
+    Console.WriteLine("Vuoi fare delle prenotazioni? ( y / N )");
+    var input = Console.ReadLine();
+    if (input == "y")
+    {
+        Console.WriteLine("Quanti posti vuoi prenotare?");
+        var prenotazioni = Convert.ToInt32(Console.ReadLine());
+        evento.PrenotaPosti(prenotazioni);
+    }
+    Console.WriteLine($"I posti disponibili per l'evento {evento.Titolo} sono {evento.CapienzaMax - evento.Prenotazioni}.");
+    Console.WriteLine($"Sono stati prenotati {evento.Prenotazioni} posti su {evento.CapienzaMax}.");
+    var disdizione = true;
+    while (disdizione)
+    {
+        Console.WriteLine("Vuoi disdire dei posti? ( y / N )");
+        var input2 = Console.ReadLine();
+        if (input2 == "y")
+        {
+            Console.WriteLine("Quanti posti vuoi disdire?");
+            var disdici = Convert.ToInt32(Console.ReadLine());
+            evento.DisdiciPosti(disdici);
+            Console.WriteLine($"Sono stati prenotati {evento.Prenotazioni}.");
+            Console.WriteLine($"Rimangono {evento.CapienzaMax - evento.Prenotazioni} disponibili.");
+        }
+        else disdizione = false;
     }
 }
