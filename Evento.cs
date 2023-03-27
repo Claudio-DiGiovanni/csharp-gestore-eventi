@@ -11,10 +11,10 @@ public class Evento
     int capienzaMax;
     int prenotazioni;
 
-    public Evento(string titolo, DateOnly data, int capienzaMax)
+    public Evento(string titolo, string data, int capienzaMax)
     {
         Titolo = titolo;
-        Data = data;
+        Data = DateOnly.ParseExact(data, "dd/MM/yyyy", null);
         CapienzaMax = capienzaMax;
         Prenotazioni = 0;
     }
