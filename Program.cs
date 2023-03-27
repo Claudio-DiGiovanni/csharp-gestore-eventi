@@ -100,12 +100,12 @@ void menu()
     }
     Console.WriteLine($"Nella lista {programmazione.Titolo} sono presenti {programmazione.NumeroEventi()} eventi.");
     Console.WriteLine(programmazione.Programmazione());
+    while (true)
+    {
     Console.WriteLine("Inserisci una data da cercare: ( gg/MM/yyyy )");
     var dataDaCercare = Console.ReadLine();
     var listaPerData = programmazione.ListaPerData(dataDaCercare);
     Console.WriteLine($"Eventi in data {dataDaCercare}");
-    Console.WriteLine(ProgrammaEventi.StampaLista(listaPerData));
-    programmazione.SvuotaListaEventi();
-
-
+    Console.WriteLine(ProgrammaEventi.StampaLista(listaPerData) != "" ? ProgrammaEventi.StampaLista(listaPerData) : "Non ci sono eventi in questa data");
+    }
 }
